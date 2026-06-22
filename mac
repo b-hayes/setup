@@ -1,13 +1,5 @@
 #!/usr/bin/env zsh
 
-# When piped via curl | zsh, stdin is consumed and interactive prompts break.
-# Re-download as a temp file and exec so stdin is a TTY for password prompts.
-if [ ! -t 0 ]; then
-    TMPFILE=$(mktemp /tmp/mac-setup.XXXXXX)
-    curl -fsSL https://raw.githubusercontent.com/b-hayes/setup/master/mac -o "$TMPFILE"
-    exec zsh "$TMPFILE"
-fi
-
 NC="\033[0m"
 Red="\033[31m"
 Green="\033[32m"
