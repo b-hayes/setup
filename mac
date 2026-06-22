@@ -1,0 +1,44 @@
+#!/usr/bin/env zsh
+
+NC="\033[0m"
+Red="\033[31m"
+Green="\033[32m"
+Blue="\033[34m"
+Cyan="\033[36m"
+
+set -eE
+catchError() {
+    echo -e "${Red}Setup failed on line $1${NC}"
+    exit 1
+}
+trap 'catchError $LINENO' ERR
+
+# HOMEBREW
+if command -v brew &>/dev/null; then
+    echo -e "${Cyan}Homebrew already installed, skipping.${NC}"
+else
+    echo -e "${Blue}Installing Homebrew...${NC}"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+# BRAVE BROWSER
+if [ -d "/Applications/Brave Browser.app" ]; then
+    echo -e "${Cyan}Brave Browser already installed, skipping.${NC}"
+else
+    echo -e "${Blue}Installing Brave Browser...${NC}"
+    brew install --cask brave-browser
+fi
+
+# GITHUB CLI
+if command -v gh &>/dev/null; then
+    echo -e "${Cyan}GitHub CLI already installed, skipping.${NC}"
+else
+    echo -e "${Blue}Installing GitHub CLI...${NC}"
+    brew install gh
+fi
+
+# GITHUB AUTH
+echo -e "${Blue}Authenticating with GitHub...${NC}"
+gh auth login
+
+echo -e "${Green}Done. You can now clone your repos.${NC}"
