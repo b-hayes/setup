@@ -21,9 +21,6 @@ catchError() {
 }
 trap 'catchError $LINENO' ERR
 
-echo -e "${Blue}Enter your password to authorize setup:${NC}"
-sudo -v
-
 # HOMEBREW
 if command -v brew &>/dev/null; then
     echo -e "${Cyan}Homebrew already installed, skipping.${NC}"
